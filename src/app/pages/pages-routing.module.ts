@@ -6,9 +6,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'pages1', component: Page1Component },
-  { path: 'account-settings', component: AccountSettingsComponent },
+  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard'} },
+  { path: 'pages1', component: Page1Component, data: { titulo: 'Páginas'} },
+  { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema'} },
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' }
 ];
 
