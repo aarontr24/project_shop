@@ -1,0 +1,96 @@
+<div class="row animated fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #input (keyup)="buscarUsuario( input.value )" type="text" name="" id="" class="form-control" placeholder="Buscar usuario...">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!ok">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>{{msg}}</strong>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!cargando && ok">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Usuarios registrados ( <small>{{totalUsuario}}</small> )</h4>
+                <div class="table-responsive m-t-40">
+                    <table id="myTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Imágen</th>
+                                <th>Correo</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Teléfono</th>
+                                <th>Role</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of usuarios">
+                                <td class="w70">
+                                    <img (click)="mostrarModal( usuario.id )" [src]="usuario.image | imagen" alt="" class="img-50 img-circle pointer">
+                                </td>
+                                <td>{{usuario.email}}</td>
+                                <td>{{usuario.name}}</td>
+                                <td>{{usuario.lastname}}</td>
+                                <td>{{usuario.phone}}</td>
+                                <td>
+                                    <select [(ngModel)]="usuario.role" name="role" class="form-control wMin">
+                                        <option value="ADMIN">ADMIN</option>
+                                        <option value="ALMACEN">ALMACEN</option>
+                                        <option value="VENTAS">VENTAS</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <button (click)="guardarRoleUsuario(usuario)" class="btn btn-primary btn-circle mr-1">
+                                            <i class="fa fa-save"></i>
+                                        </button>
+                                        <button *ngIf="usuario.status === 'inactivo'" (click)="desbloquearUsuario(usuario)" class="btn btn-danger btn-circle">
+                                            <i class="fa fa-lock"></i>
+                                        </button>
+                                        <button *ngIf="usuario.status === 'activo'" (click)="bloquearUsuario(usuario)" class="btn btn-success btn-circle">
+                                            <i class="fa fa-unlock"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div align="center">
+                        <button (click)="cambiarDesde(-6)" class="btn btn-secondary">
+                            Anteriores
+                        </button>
+                        <button (click)="cambiarDesde(6)" class="btn btn-secondary">
+                            Siguientes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Upload -->
+<app-modal-upload></app-modal-upload>
